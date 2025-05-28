@@ -6,15 +6,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Service-Discovery" />
+        <module name="ReservationService" />
         <module name="AppUserService" />
+        <module name="Service-Discovery" />
+        <module name="SecurityService" />
+        <module name="AuthService" />
+        <module name="EmailService" />
+        <module name="RegistrationService" />
+        <module name="SpacesService" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="AppUserService" options="-parameters" />
+      <module name="AuthService" options="-parameters" />
+      <module name="EmailService" options="-parameters" />
+      <module name="RegistrationService" options="-parameters" />
+      <module name="ReservationService" options="-parameters" />
+      <module name="SecurityService" options="-parameters" />
       <module name="Service-Discovery" options="-parameters" />
+      <module name="SpacesService" options="-parameters" />
     </option>
   </component>
 </project>

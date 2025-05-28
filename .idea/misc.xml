@@ -6,6 +6,12 @@
       <list>
         <option value="$PROJECT_DIR$/Service-Discovery/Service-Discovery/pom.xml" />
         <option value="$PROJECT_DIR$/AppUserService/AppUserService/pom.xml" />
+        <option value="$PROJECT_DIR$/AuthService/AuthService/pom.xml" />
+        <option value="$PROJECT_DIR$/EmailService/EmailService/pom.xml" />
+        <option value="$PROJECT_DIR$/RegistrationService/RegistrationService/pom.xml" />
+        <option value="$PROJECT_DIR$/ReservationService/ReservationService/pom.xml" />
+        <option value="$PROJECT_DIR$/SecurityService/SecurityService/pom.xml" />
+        <option value="$PROJECT_DIR$/SpacesService/SpacesService/pom.xml" />
       </list>
     </option>
   </component>
