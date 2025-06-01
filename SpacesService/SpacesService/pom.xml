@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ucsal</groupId>
-	<artifactId>ReservationService</artifactId>
+	<artifactId>EspacesService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ReservationService</name>
-	<description>MicroServiçoReserva</description>
+	<name>SpacesService</name>
+	<description>MicroServiçoEspaço</description>
 	<url/>
 	<licenses>
 		<license/>
