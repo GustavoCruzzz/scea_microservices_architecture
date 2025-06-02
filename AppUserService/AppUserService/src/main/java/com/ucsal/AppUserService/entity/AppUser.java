@@ -49,12 +49,12 @@ public class AppUser implements UserDetails {
             orphanRemoval = true
     )
     private List<ConfirmationToken> confirmationTokens = new ArrayList<>();
-    @OneToMany(
-            mappedBy = "professor",
-            cascade = CascadeType.REMOVE,
-            orphanRemoval = true
-    )
-    private List<Reservation> reservations = new ArrayList<>();
+//    @OneToMany(
+//            mappedBy = "professor",
+//            cascade = CascadeType.REMOVE,
+//            orphanRemoval = true
+//    )
+//    private List<Reservation> reservations = new ArrayList<>();
 
 
 
