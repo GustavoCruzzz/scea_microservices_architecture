@@ -11,6 +11,6 @@ import java.util.Map;
 
 @FeignClient(name = "RESERVATIONSERVICE", url = "${user-service.url}")
 public interface ReservationInterface {
-    @GetMapping("/api/v1/reservations/user/{id}")
+    @GetMapping("/api/v1/reservations/user")
     List<ReservationDTO> getReservationsByUser(@PathVariable("id") Long id);
 }
