@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "RESERVATIONSERVICE")
+@FeignClient(name = "RESERVATIONSERVICE", url = "${user-service.url}")
 public interface ReservationInterface {
     @GetMapping("/api/v1/reservations/user/{id}")
     List<ReservationDTO> getReservationsByUser(@PathVariable("id") Long id);

@@ -1,6 +1,6 @@
 package com.ucsal.AppUserService.service;
 
-import com.ucsal.AppUserService.token.ConfirmationToken;
+
 import com.ucsal.AppUserService.dto.AppUserWithReservationDTO;
 import com.ucsal.AppUserService.dto.ReservationDTO;
 import com.ucsal.AppUserService.entity.AppUser;
@@ -9,7 +9,7 @@ import com.ucsal.AppUserService.feign.ReservationInterface;
 import com.ucsal.AppUserService.repository.AppUserRepository;
 import com.ucsal.AppUserService.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,17 +21,17 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Transactional
+
 public class AppUserService implements UserDetailsService {
 
+
+    private static final String USER_NOT_FOUND_MSG = "Usuário com email %s não encontrado";
+
+    private ReservationInterface reservationInterface;
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
-
-    @Autowired
-    private ReservationInterface reservationInterface;
-
-    private static final String USER_NOT_FOUND_MSG = "Usuário com email %s não encontrado";
 
     public AppUserWithReservationDTO getUserWithReservations(Long userId) {
         AppUser user = appUserRepository.findById(userId)
