@@ -8,7 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ReservationService" />
+        <module name="ReservationService (1)" />
         <module name="AppUserService" />
+        <module name="ReservationService (2)" />
         <module name="Service-Discovery" />
         <module name="SecurityService" />
         <module name="AuthService" />
@@ -25,6 +27,8 @@
       <module name="EmailService" options="-parameters" />
       <module name="RegistrationService" options="-parameters" />
       <module name="ReservationService" options="-parameters" />
+      <module name="ReservationService (1)" options="-parameters" />
+      <module name="ReservationService (2)" options="-parameters" />
       <module name="SecurityService" options="-parameters" />
       <module name="Service-Discovery" options="-parameters" />
       <module name="SpacesService" options="-parameters" />

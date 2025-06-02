@@ -1,6 +1,5 @@
 package com.ucsal.SpacesService.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,32 +12,16 @@ import lombok.Setter;
 @Table(name = "academic_spaces")
 public class AcademicSpaces {
 
-    @SequenceGenerator(
-            name = "academic_spaces_sequence",
-            sequenceName = "academic_spaces_sequence",
-            allocationSize = 1
-    )
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "academic_spaces_sequence"
-    )
+    @SequenceGenerator(name = "spaces_seq", sequenceName = "spaces_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "spaces_seq")
     private Long id;
 
-    @JsonProperty("nameCode")
-    @Column(name = "name_code", nullable = false)
-    private String nameCode;
-
-    @Column(nullable = false)
+    @Column(name = "space_name", nullable = false, length = 100)
     private String name;
 
-    @Column(length = 1500)
-    private String description;
-
-    @Column(nullable = false)
-    private int capacity;
-
-    @Column(name = "space_type", nullable = false)
+    // Tipo de espaço: SALA, LAB ou AUDITORIO
+    @Column(name = "space_type", nullable = false, length = 20)
     private String spaceType;
 
     @Column(name = "has_computer", nullable = false)
@@ -47,6 +30,7 @@ public class AcademicSpaces {
     @Column(name = "active", nullable = false)
     private boolean active = true;
 
+    // Motivo da desativação quando active = false (opcional)
     @Column(name = "disable_reason", length = 500)
     private String disableReason;
 }

@@ -9,58 +9,56 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/academic-spaces")
+@RequestMapping("/api/spaces")
 @AllArgsConstructor
 public class AcademicSpacesController {
 
     private final AcademicSpacesService academicSpacesService;
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createSpace(@RequestBody AcademicSpaces academicSpaces) {
-        try {
-            return ResponseEntity.ok(academicSpacesService.createSpace(academicSpaces));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro ao criar espaço acadêmico: " + e.getMessage());
-        }
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateSpace(@PathVariable Long id,
-                                         @RequestBody AcademicSpaces academicSpaces) {
-        try {
-            return ResponseEntity.ok(academicSpacesService.updateSpace(id, academicSpaces));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro ao atualizar espaço acadêmico: " + e.getMessage());
-        }
-    }
-
-    @GetMapping("/active")
-    public ResponseEntity<List<AcademicSpaces>> getActiveSpaces() {
-        return ResponseEntity.ok(academicSpacesService.getActiveSpaces());
-    }
-
-    @GetMapping("/all")
+    // GET /api/spaces            → lista todos
+    @GetMapping
     public ResponseEntity<List<AcademicSpaces>> getAllSpaces() {
-        return ResponseEntity.ok(academicSpacesService.getAllSpaces());
+        List<AcademicSpaces> spaces = academicSpacesService.getAllSpaces();
+        return ResponseEntity.ok(spaces);
     }
 
-    @PutMapping("/update-availability/{id}")
-    public ResponseEntity<?> updateAvailability(@PathVariable Long id,
-                                                @RequestParam boolean active) {
-        try {
-            return ResponseEntity.ok(academicSpacesService.updateAvailability(id, active));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro ao atualizar disponibilidade: " + e.getMessage());
-        }
+    // GET /api/spaces/{id}       → busca por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<AcademicSpaces> getSpaceById(@PathVariable Long id) {
+        AcademicSpaces space = academicSpacesService.getSpaceById(id);
+        return ResponseEntity.ok(space);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteSpace(@PathVariable Long id) {
-        try {
-            academicSpacesService.deleteSpace(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro ao excluir espaço: " + e.getMessage());
-        }
+    // POST /api/spaces           → cria novo
+    @PostMapping
+    public ResponseEntity<AcademicSpaces> createSpace(@RequestBody AcademicSpaces newSpace) {
+        AcademicSpaces created = academicSpacesService.createSpace(newSpace);
+        return ResponseEntity.status(201).body(created);
+    }
+
+    // PUT /api/spaces/{id}       → atualiza inteiro
+    @PutMapping("/{id}")
+    public ResponseEntity<AcademicSpaces> updateSpace(
+            @PathVariable Long id,
+            @RequestBody AcademicSpaces updatedSpace) {
+        AcademicSpaces space = academicSpacesService.updateSpace(id, updatedSpace);
+        return ResponseEntity.ok(space);
+    }
+
+    // PATCH /api/spaces/{id}/availability?active=true
+    // → atualiza apenas “active”
+    @PatchMapping("/{id}/availability")
+    public ResponseEntity<AcademicSpaces> updateAvailability(
+            @PathVariable Long id,
+            @RequestParam boolean active) {
+        AcademicSpaces space = academicSpacesService.updateAvailability(id, active);
+        return ResponseEntity.ok(space);
+    }
+
+    // DELETE /api/spaces/{id}    → deleta
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSpace(@PathVariable Long id) {
+        academicSpacesService.deleteSpace(id);
+        return ResponseEntity.noContent().build();
     }
 }
