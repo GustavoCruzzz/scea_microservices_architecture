@@ -1,6 +1,7 @@
 package com.ucsal.AppUserService.entity;
 
 
+import com.ucsal.AppUserService.token.ConfirmationToken;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

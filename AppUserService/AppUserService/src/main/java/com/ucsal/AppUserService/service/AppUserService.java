@@ -25,8 +25,8 @@ public class AppUserService implements UserDetailsService {
 
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-   private final ConfirmationTokenService confirmationTokenService;
-    private final AppUserRepository repo;
+    private final ConfirmationTokenService confirmationTokenService;
+
 
     @Autowired
     private ReservationInterface reservationInterface;
@@ -114,10 +114,10 @@ public class AppUserService implements UserDetailsService {
 
     @Transactional
     public void updateName(String email, String firstName, String lastName) {
-        AppUser u = repo.findByEmail(email)
+        AppUser u = appUserRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + email));
         u.setFirstName(firstName);
         u.setLastName(lastName);
-        repo.save(u);
+        appUserRepository.save(u);
     }
 }
