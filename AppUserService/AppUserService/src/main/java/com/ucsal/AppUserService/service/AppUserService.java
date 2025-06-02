@@ -1,7 +1,7 @@
 package com.ucsal.AppUserService.service;
 
 //import com.maviniciusdev.back.registration.token.ConfirmationTokenService;
-import com.ucsal.AppUserService.dto.AppUserWithReservationsDTO;
+import com.ucsal.AppUserService.dto.AppUserWithReservationDTO;
 import com.ucsal.AppUserService.dto.ReservationDTO;
 import com.ucsal.AppUserService.entity.AppUser;
 import com.ucsal.AppUserService.entity.AppUserRole;
@@ -32,13 +32,13 @@ public class AppUserService implements UserDetailsService {
 
     private static final String USER_NOT_FOUND_MSG = "Usuário com email %s não encontrado";
 
-    public AppUserWithReservationsDTO getUserWithReservations(Long userId) {
+    public AppUserWithReservationDTO getUserWithReservations(Long userId) {
         AppUser user = appUserRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + userId));
 
         List<ReservationDTO> reservations = reservationInterface.getReservationsByUser(userId);
 
-        AppUserWithReservationsDTO dto = new AppUserWithReservationsDTO();
+        AppUserWithReservationDTO dto = new AppUserWithReservationDTO();
         dto.setId(user.getId());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
