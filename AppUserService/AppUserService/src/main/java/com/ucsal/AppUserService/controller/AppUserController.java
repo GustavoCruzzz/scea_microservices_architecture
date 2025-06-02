@@ -1,7 +1,8 @@
 package com.ucsal.AppUserService.controller;
 
 
-import com.maviniciusdev.back.registration.token.ConfirmationTokenService;
+//import com.maviniciusdev.back.registration.token.ConfirmationTokenService;
+import com.ucsal.AppUserService.dto.AppUserWithReservationDTO;
 import com.ucsal.AppUserService.service.AppUserService;
 import jakarta.annotation.security.PermitAll;
 import lombok.AllArgsConstructor;
@@ -19,12 +20,18 @@ import java.util.stream.Collectors;
 public class AppUserController {
 
     private final AppUserService appUserService;
-    private final ConfirmationTokenService confirmationTokenService;
+//    private final ConfirmationTokenService confirmationTokenService;
 
     /** DTOs */
     public record UserDto(Long id, String firstName, String lastName, String email, String appUserRole) {}
     public record RoleDto(String role) {}
     public record ProfileDto(String firstName, String lastName) {}
+
+    // Lista as reservas de um user
+    @GetMapping("/{id}/reservations")
+    public ResponseEntity<AppUserWithReservationDTO> getUserWithReservations(@PathVariable Long id) {
+        return ResponseEntity.ok(appUserService.getUserWithReservations(id));
+    }
 
     // 1) Checar existência - PÚBLICO
     @GetMapping("/exists")

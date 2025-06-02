@@ -1,5 +1,6 @@
 package com.ucsal.AppUserService.feign;
 
+import com.ucsal.AppUserService.dto.ReservationDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +11,6 @@ import java.util.Map;
 
 @FeignClient(name = "RESERVATIONSERVICE")
 public interface ReservationInterface {
-
-    // Pega uma reserva por Id :p
-    @GetMapping("/reservations/{id}")
-    ResponseEntity<Map<String, Object>> getReservationById(@PathVariable Long id);
-
-    // Pega todas reservas do usuario por Id :3
-    @GetMapping("/reservations/user/{userId}")
-    ResponseEntity<List<Map<String, Object>>> getReservationsByUser(@PathVariable Long userId);
+    @GetMapping("/api/v1/reservations/user/{id}")
+    List<ReservationDTO> getReservationsByUser(@PathVariable("id") Long id);
 }

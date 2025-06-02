@@ -1,7 +1,66 @@
 package com.ucsal.AppUserService.service;
 
-public class AppUserService {
-}
+//import com.maviniciusdev.back.registration.token.ConfirmationTokenService;
+import com.ucsal.AppUserService.dto.AppUserWithReservationsDTO;
+import com.ucsal.AppUserService.dto.ReservationDTO;
+import com.ucsal.AppUserService.entity.AppUser;
+import com.ucsal.AppUserService.entity.AppUserRole;
+import com.ucsal.AppUserService.feign.ReservationInterface;
+import com.ucsal.AppUserService.repository.AppUserRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@AllArgsConstructor
+@Transactional
+public class AppUserService implements UserDetailsService {
+
+    private final AppUserRepository appUserRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//    private final ConfirmationTokenService confirmationTokenService;
+    private final AppUserRepository repo;
+
+    @Autowired
+    private ReservationInterface reservationInterface;
+
+    private static final String USER_NOT_FOUND_MSG = "Usuário com email %s não encontrado";
+
+    public AppUserWithReservationsDTO getUserWithReservations(Long userId) {
+        AppUser user = appUserRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + userId));
+
+        List<ReservationDTO> reservations = reservationInterface.getReservationsByUser(userId);
+
+        AppUserWithReservationsDTO dto = new AppUserWithReservationsDTO();
+        dto.setId(user.getId());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setEmail(user.getEmail());
+        dto.setReservations(reservations);
+
+        return dto;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return appUserRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException(
+                                String.format(USER_NOT_FOUND_MSG, email)
+                        )
+                );
+    }
+
+    public Optional<AppUser> findByEmail(String email) {
+        return appUserRepository.findByEmail(email);
+    }
 
     public boolean existsByEmail(String email) {
         return appUserRepository.findByEmail(email).isPresent();
@@ -11,15 +70,11 @@ public class AppUserService {
         if (existsByEmail(appUser.getEmail())) {
             throw new IllegalStateException("Email já cadastrado");
         }
-        appUser.setPassword(
-                bCryptPasswordEncoder.encode(appUser.getPassword())
-        );
+        appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
         boolean isFirstUser = appUserRepository.count() == 0;
-        appUser.setAppUserRole(
-                isFirstUser ? AppUserRole.ADMIN : AppUserRole.USER
-        );
+        appUser.setAppUserRole(isFirstUser ? AppUserRole.ADMIN : AppUserRole.USER);
         appUserRepository.save(appUser);
-        return confirmationTokenService.createToken(appUser);
+//        return confirmationTokenService.createToken(appUser);
     }
 
     public int enableAppUser(String email) {
@@ -41,19 +96,13 @@ public class AppUserService {
         appUserRepository.save(user);
     }
 
-    //Retorna todos os usuários (para listagem em /api/v1/users).
-
     public List<AppUser> findAll() {
         return appUserRepository.findAll();
     }
 
-    // Exclui um usuário pelo ID.
-
     public void deleteById(Long id) {
         appUserRepository.deleteById(id);
     }
-
-    //Atualiza o papel (role) de um usuário.
 
     public AppUser updateRole(Long id, String newRole) {
         AppUser u = appUserRepository.findById(id)
