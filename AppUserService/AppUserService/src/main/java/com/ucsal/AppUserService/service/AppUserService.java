@@ -1,12 +1,13 @@
 package com.ucsal.AppUserService.service;
 
-//import com.maviniciusdev.back.registration.token.ConfirmationTokenService;
+import com.ucsal.AppUserService.token.ConfirmationToken;
 import com.ucsal.AppUserService.dto.AppUserWithReservationDTO;
 import com.ucsal.AppUserService.dto.ReservationDTO;
 import com.ucsal.AppUserService.entity.AppUser;
 import com.ucsal.AppUserService.entity.AppUserRole;
 import com.ucsal.AppUserService.feign.ReservationInterface;
 import com.ucsal.AppUserService.repository.AppUserRepository;
+import com.ucsal.AppUserService.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
@@ -24,7 +25,7 @@ public class AppUserService implements UserDetailsService {
 
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-//    private final ConfirmationTokenService confirmationTokenService;
+   private final ConfirmationTokenService confirmationTokenService;
     private final AppUserRepository repo;
 
     @Autowired
@@ -74,7 +75,7 @@ public class AppUserService implements UserDetailsService {
         boolean isFirstUser = appUserRepository.count() == 0;
         appUser.setAppUserRole(isFirstUser ? AppUserRole.ADMIN : AppUserRole.USER);
         appUserRepository.save(appUser);
-//        return confirmationTokenService.createToken(appUser);
+      return confirmationTokenService.createToken(appUser);
     }
 
     public int enableAppUser(String email) {
