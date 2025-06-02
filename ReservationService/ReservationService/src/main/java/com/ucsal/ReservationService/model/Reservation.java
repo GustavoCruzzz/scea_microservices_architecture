@@ -1,7 +1,6 @@
-package com.ucsal.ReservationService;
+package com.ucsal.ReservationService.model;
 
 import jakarta.persistence.*;
-import jakarta.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,47 +14,32 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class ReservationEntity {
+public class Reservation {
 
-
-    @SequenceGenerator(
-            name = "reservation_sequence",
-            sequenceName = "reservation_sequence",
-            allocationSize = 1
-    )
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "reservation_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "academic_space_id", nullable = false)
-    private Long academicSpaceId;
-
-    @Column(name = "professor_id", nullable = false)
+    private Long academicSpacesId;  // apenas ID para acoplamento fraco
     private Long professorId;
 
     private LocalDate reservationDate;
     private LocalTime reservationInit;
     private LocalTime reservationEnd;
 
-    // novo: tipo da reserva (AULA ou EVENTO)
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ReservationType type;
 
-    // novo: timestamp de criação
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    // novo: comentários/opcionais do professor
     @Column(length = 500)
     private String observations;
 
     private boolean confirmUse = false;
-    private boolean ended     = false;
+    private boolean ended = false;
 
     public enum ReservationType {
         AULA, EVENTO
