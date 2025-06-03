@@ -1,8 +1,8 @@
-package com.ucsal.AuthService.Service;
+package org.example.authservice.Service;
 
-import com.ucsal.AuthService.Entity.ConfirmationToken;
-import com.ucsal.AuthService.Repository.ConfirmationTokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.example.authservice.Entity.ConfirmationToken;
+import org.example.authservice.Repository.ConfirmationTokenRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
