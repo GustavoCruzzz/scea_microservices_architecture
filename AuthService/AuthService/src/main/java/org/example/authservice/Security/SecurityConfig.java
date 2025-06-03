@@ -1,7 +1,7 @@
-package com.ucsal.AuthService.Security;
+package org.example.authservice.Security;
 
-import com.ucsal.AuthService.Service.AppUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.example.authservice.Service.AppUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +21,7 @@ public class SecurityConfig {
 
 
     private final AppUserDetailsService appUserDetailsService;
-    private final com.ucsal.AuthService.Security.JwtAuthenticationFilter jwtAuthFilter;
+    private final org.example.authservice.Security.JwtAuthenticationFilter jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,7 +33,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        http.authenticationProvider(authenticationProvider());
+               http.authenticationProvider(authenticationProvider());
 
         return http.build();
     }
