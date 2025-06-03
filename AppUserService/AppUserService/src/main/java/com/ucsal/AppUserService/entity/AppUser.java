@@ -1,6 +1,7 @@
 package com.ucsal.AppUserService.entity;
 
 
+import com.ucsal.AppUserService.token.ConfirmationToken;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -49,12 +50,12 @@ public class AppUser implements UserDetails {
             orphanRemoval = true
     )
     private List<ConfirmationToken> confirmationTokens = new ArrayList<>();
-    @OneToMany(
-            mappedBy = "professor",
-            cascade = CascadeType.REMOVE,
-            orphanRemoval = true
-    )
-    private List<Reservation> reservations = new ArrayList<>();
+//    @OneToMany(
+//            mappedBy = "professor",
+//            cascade = CascadeType.REMOVE,
+//            orphanRemoval = true
+//    )
+//    private List<Reservation> reservations = new ArrayList<>();
 
 
 

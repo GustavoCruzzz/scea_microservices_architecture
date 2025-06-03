@@ -1,11 +1,10 @@
 package com.ucsal.AppUserService.controller;
 
-
-//import com.maviniciusdev.back.registration.token.ConfirmationTokenService;
 import com.ucsal.AppUserService.dto.AppUserWithReservationDTO;
 import com.ucsal.AppUserService.service.AppUserService;
 import jakarta.annotation.security.PermitAll;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,6 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AppUserController {
 
+    @Lazy
     private final AppUserService appUserService;
 //    private final ConfirmationTokenService confirmationTokenService;
 
