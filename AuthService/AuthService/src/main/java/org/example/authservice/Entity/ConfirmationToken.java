@@ -1,4 +1,4 @@
-package com.ucsal.AuthService.Entity;
+package org.example.authservice.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,10 +7,10 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
 public class ConfirmationToken {
 
     @Id
@@ -23,22 +23,21 @@ public class ConfirmationToken {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    private LocalDateTime confirmedAt;
+
     @Column(nullable = false)
     private LocalDateTime expiresAt;
 
-    private LocalDateTime confirmedAt;
-
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "app_user_id")
-    private AppUser appUser;
+    @Column(nullable = false)
+    private String userEmail;
 
     public ConfirmationToken(String token,
                              LocalDateTime createdAt,
                              LocalDateTime expiresAt,
-                             AppUser appUser) {
+                             String userEmail) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.appUser = appUser;
+        this.userEmail = userEmail;
     }
 }
