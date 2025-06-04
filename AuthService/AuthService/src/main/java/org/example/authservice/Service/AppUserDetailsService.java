@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class AppUserDetailsService implements UserDetailsService {
@@ -29,11 +28,11 @@ public class AppUserDetailsService implements UserDetailsService {
         return User.builder()
                 .username(userResponse.getEmail())
                 .password(userResponse.getPasswordHash())
-                .authorities(List.of(new SimpleGrantedAuthority(userResponse.getRole())))
-                .accountExpired(false)
-                .accountLocked(userResponse.isLocked())
-                .credentialsExpired(false)
-                .disabled(!userResponse.isEnabled())
+                .authorities(List.of(new SimpleGrantedAuthority("ROLE_" + userResponse.getRole()))) // importante prefixar com "ROLE_"
+                .accountExpired(false)                     // você pode implementar essa lógica se precisar
+                .accountLocked(userResponse.isLocked())    // bloqueado se true
+                .credentialsExpired(false)                  // implementar se necessário
+                .disabled(!userResponse.isEnabled())       // desabilitado se não está enabled
                 .build();
     }
 }

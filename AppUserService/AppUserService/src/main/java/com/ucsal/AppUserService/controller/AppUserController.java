@@ -1,6 +1,7 @@
 package com.ucsal.AppUserService.controller;
 
 import com.ucsal.AppUserService.dto.AppUserWithReservationDTO;
+import com.ucsal.AppUserService.dto.UserAuthDto;
 import com.ucsal.AppUserService.service.AppUserService;
 import jakarta.annotation.security.PermitAll;
 import lombok.AllArgsConstructor;
@@ -104,4 +105,21 @@ public class AppUserController {
         appUserService.updateName(email, dto.firstName(), dto.lastName());
         return ResponseEntity.ok().build();
     }
+
+    // 7) Endpoint para o auth-service obter dados do usuário para autenticação
+    @GetMapping("/auth")
+    @PermitAll
+    public ResponseEntity<UserAuthDto> getUserAuthData(@RequestParam String email) {
+        return appUserService.findByEmail(email)
+                .map(u -> ResponseEntity.ok(new UserAuthDto(
+                        u.getId(),
+                        u.getEmail(),
+                        u.getPassword(), // ou getPasswordHash() dependendo do nome do método na entidade
+                        u.isEnabled(),
+                        u.getLocked(),
+                        u.getAppUserRole().name()
+                )))
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
+
