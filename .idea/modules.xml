@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AppUserService/AppUserService/AppUserService.iml" filepath="$PROJECT_DIR$/AppUserService/AppUserService/AppUserService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/scea_microservices_architecture.iml" filepath="$PROJECT_DIR$/.idea/scea_microservices_architecture.iml" />
     </modules>
   </component>
